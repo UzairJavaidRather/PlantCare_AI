@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, "Segoe UI", sans-serif;
+  color: #1f2937;
+  line-height: 1.5;
+  font-weight: 400;
+  background: #edfdf2;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(196, 255, 212, 0.9), transparent 30%),
+    linear-gradient(135deg, #f4fff6 0%, #eafaf0 35%, #e0f4e6 100%);
+}
+
+button, input {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.weather-gradient {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.6s ease, border-color 0.6s ease, transform 0.3s ease;
+  animation: weatherPulse 10s ease-in-out infinite alternate;
+}
+
+.weather-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 40%, transparent 70%);
+  animation: weatherFloat 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.weather-gradient > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes weatherPulse {
+  0% {
+    filter: saturate(0.95) brightness(1);
+  }
+  100% {
+    filter: saturate(1.15) brightness(1.06);
+  }
+}
+
+@keyframes weatherFloat {
+  0% {
+    transform: translate3d(-8%, 4%, 0) scale(0.96);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(8%, -4%, 0) scale(1.08);
+    opacity: 1;
+  }
+}
