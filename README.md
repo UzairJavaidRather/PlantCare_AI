@@ -156,6 +156,7 @@ You should configure your Supabase project and ensure the relevant tables exist 
 - The project is structured as a learning full-stack AI application and is intended to be extended further.
 - Some advanced features depend on valid API keys and a configured Supabase project.
 - The frontend and backend are designed to run together locally for development.
+- In the deployed version, disease detection may occasionally exceed Render's 512 MB free-tier memory limit while loading the PyTorch/Hugging Face model, causing intermittent failures. The application runs correctly in local development, but reliable production operation requires a paid Render tier with additional memory.
 
 ## Future Improvements
 
