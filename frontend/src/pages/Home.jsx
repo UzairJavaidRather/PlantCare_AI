@@ -127,57 +127,88 @@ export default function Home({ onViewDashboard }) {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#f2fdf3_0%,_#e6f8eb_28%,_#dff3df_52%,_#edf7ef_100%)] flex flex-col px-3 py-2">
+    <div className="app-shell flex min-h-screen flex-col overflow-x-hidden px-3 py-3 sm:px-5">
 
-      <div className="flex justify-between items-center mb-3 flex-shrink-0 rounded-2xl border border-green-200/70 bg-white/60 backdrop-blur-sm px-3 py-2 shadow-sm">
+      <div className="rise-in mx-auto mb-4 flex w-full max-w-[1400px] shrink-0 items-center justify-between rounded-2xl border border-white/80 bg-[#fffdf5]/75 px-3 py-2.5 shadow-[0_10px_30px_rgba(31,77,57,0.08)] backdrop-blur-xl">
         <button
           onClick={handleLogout}
-          className="bg-green-600 text-white text-[11px] font-medium px-3 py-1.5 rounded-lg shadow-sm hover:bg-green-700 transition-colors"
+          className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-[#6d7b70] transition hover:bg-[#edf3e8] hover:text-[#173b31]"
         >
-          Log out
+          Exit garden
         </button>
 
-        <div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-green-600 via-emerald-500 to-lime-500 px-3 py-1.5 shadow-md">
-          <span className="text-sm">🌿</span>
-          <p className="text-sm font-extrabold tracking-tight text-white">PlantCare AI</p>
+        <div className="flex items-center gap-2 rounded-full bg-[#173b31] px-4 py-2 shadow-[0_8px_20px_rgba(23,59,49,0.2)]">
+          <span className="text-sm text-[#e7c56f]">✦</span>
+          <p className="text-sm font-bold tracking-tight text-[#fffdf5]">PlantCare AI</p>
         </div>
 
         <button
           onClick={onViewDashboard}
-          className="bg-green-600 text-white text-[11px] font-medium px-3 py-1.5 rounded-lg shadow-sm hover:bg-green-700 transition-colors"
+          className="rounded-lg bg-[#d6a33d] px-3 py-1.5 text-[11px] font-bold text-[#173b31] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#e2b653]"
         >
-          Dashboard →
+          Your dashboard <span aria-hidden="true">↗</span>
         </button>
       </div>
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-2 overflow-hidden">
+      <section className="welcome-hero rise-in rise-in-delay-1 mx-auto mb-4 w-full max-w-[1400px] shrink-0 rounded-[1.25rem] px-5 py-4 text-[#fffdf5] shadow-[0_16px_34px_rgba(23,59,49,0.18)] sm:px-7 sm:py-5">
+        <div className="relative z-[1] max-w-2xl">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e7c56f]">Your intelligent plant companion</p>
+          <h1 className="display-font mt-1 text-3xl leading-tight sm:text-4xl">Let’s see what’s growing today.</h1>
+          <p className="mt-2 max-w-lg text-xs leading-5 text-[#d7e6d5] sm:text-sm">
+            Upload a leaf photo and we’ll help you understand your plant, spot signs of stress, and choose its next best care step.
+          </p>
+        </div>
+        <div className="relative z-[1] mt-4 flex items-center gap-2 text-[10px] font-semibold text-[#e7c56f] sm:absolute sm:bottom-5 sm:right-7 sm:mt-0">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-[#e7c56f]" /> Ready when you are
+        </div>
+      </section>
+
+      <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 items-start gap-5 pb-6 md:grid-cols-3">
 
         {/* Column 1 — upload + identification */}
-        <div className="flex flex-col gap-2 min-h-0 overflow-y-auto">
-          <div className="bg-white border border-dashed border-gray-300 rounded-lg p-2">
+        <div className="flex min-w-0 flex-col gap-3 rise-in rise-in-delay-1">
+          <div className="flex items-center gap-2 px-1">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#173b31] text-xs text-[#e7c56f]">01</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b88628]">Start here</p>
+              <p className="text-xs font-semibold text-[#345046]">Diagnose a plant</p>
+            </div>
+          </div>
+          <div className="surface-lift rounded-2xl border border-white/90 bg-[#fffdf5]/80 p-2 shadow-[0_10px_28px_rgba(31,77,57,0.08)] backdrop-blur-xl">
             <ImageUpload onFileSelected={handleFileSelected} compact />
           </div>
 
-          {loading && <p className="text-xs text-green-600 text-center">Analyzing...</p>}
+          {loading && (
+            <div className="analysis-state flex items-center gap-3 rounded-xl border border-[#e6dec1] bg-[#fff9e8]/90 px-3 py-2.5 text-[#173b31] shadow-sm">
+              <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#d6a33d]/35 text-sm text-[#b88628]">
+                <span className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-[#b88628]" />
+                ✦
+              </span>
+              <span className="relative">
+                <strong className="block text-xs font-bold">Reading your leaf</strong>
+                <span className="text-[10px] text-[#6d7b70]">Checking species and signs of stress...</span>
+              </span>
+            </div>
+          )}
           {error && <p className="text-xs text-red-600 text-center">{error}</p>}
 
           {plant && (
-            <div className="bg-white border border-gray-100 rounded-lg p-2.5">
-              <p className="text-[10px] text-gray-400 mb-0.5">🔍 Species</p>
-              <p className="text-sm font-medium text-gray-800">{plant.common_name}</p>
-              <p className="text-[10px] text-gray-400">{plant.confidence}% confidence</p>
+            <div className="surface-lift rounded-2xl border border-[#d9e7d7] bg-[#f4f8ed]/90 p-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#b88628] mb-1">Species found</p>
+              <p className="display-font text-xl text-[#173b31]">{plant.common_name}</p>
+              <p className="text-[10px] text-[#6d7b70]">{plant.confidence}% confidence</p>
             </div>
           )}
 
           {disease && (
-            <div className="bg-white border border-gray-100 rounded-lg p-2.5">
-              <p className="text-[10px] text-gray-400 mb-0.5">
-                {disease.is_healthy ? '✅ Status' : '⚠️ Disease'}
+            <div className="surface-lift rounded-2xl border border-[#e6dec1] bg-[#fff9e8]/90 p-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#b88628] mb-1">
+                {disease.is_healthy ? 'Plant status' : 'Attention needed'}
               </p>
-              <p className="text-sm font-medium text-gray-800">
+              <p className="text-sm font-bold text-[#173b31]">
                 {disease.is_healthy ? 'Healthy' : disease.label}
               </p>
-              <p className="text-[10px] text-gray-400">{disease.confidence}% confidence</p>
+              <p className="text-[10px] text-[#6d7b70]">{disease.confidence}% confidence</p>
             </div>
           )}
 
@@ -185,34 +216,46 @@ export default function Home({ onViewDashboard }) {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-green-600 text-white text-xs py-1.5 rounded-lg hover:bg-green-700 disabled:opacity-50"
+              className="rounded-xl bg-[#173b31] py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#245b46] disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save to my plants'}
             </button>
           )}
-          {savedPlantId && <p className="text-[11px] text-green-700 text-center">✓ Saved</p>}
+          {savedPlantId && (
+            <p className="success-badge mx-auto flex w-fit items-center gap-2 rounded-full border border-[#c9dfcc] bg-[#edf5e9] px-3 py-1.5 text-[11px] font-bold text-[#2d7756]" role="status">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#2d7756] text-[9px] text-white">✓</span>
+              Added to your garden
+            </p>
+          )}
           {saveError && <p className="text-[11px] text-red-600 text-center">{saveError}</p>}
         </div>
 
         {/* Column 2 — context: weather + sustainability + watering */}
-        <div className="flex flex-col gap-2 min-h-0 overflow-y-auto">
+        <div className="flex min-w-0 flex-col gap-3 rise-in rise-in-delay-2">
+          <div className="flex items-center gap-2 px-1">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#d6a33d] text-xs font-bold text-[#173b31]">02</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b88628]">Read the signs</p>
+              <p className="text-xs font-semibold text-[#345046]">Today’s care context</p>
+            </div>
+          </div>
           {weather && (
             <div
-              className="weather-gradient rounded-xl p-3 shadow-sm border"
+              className="weather-gradient h-auto min-h-[270px] rounded-2xl border p-4 shadow-[0_12px_30px_rgba(31,77,57,0.1)] md:min-h-0"
               style={{
                 background: weatherTheme.background,
                 borderColor: weatherTheme.border,
               }}
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-start justify-between mb-3">
                 <div>
-                  <p className="text-[10px] uppercase tracking-wide text-green-700 font-semibold">Weather</p>
-                  <p className="text-[10px] text-gray-500 mt-1">Today in</p>
-                  <span className="inline-flex items-center rounded-full bg-green-600/10 border border-green-200 px-2 py-0.5 text-[10px] font-medium text-green-800 mt-0.5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-green-700">Today’s atmosphere</p>
+                  <p className="mt-1 text-[10px] text-gray-500">A little context for your care routine</p>
+                  <span className="mt-2 inline-flex items-center rounded-full border border-green-200 bg-green-600/10 px-2 py-0.5 text-[10px] font-semibold text-green-800">
                     📍 {weather.location || 'Your area'}
                   </span>
                 </div>
-                <span className="text-xl">
+                <span className="weather-icon">
                   {weather.condition?.toLowerCase().includes('rain') ? '🌧️' :
                     weather.condition?.toLowerCase().includes('cloud') ? '☁️' :
                     weather.condition?.toLowerCase().includes('clear') ? '☀️' :
@@ -222,19 +265,22 @@ export default function Home({ onViewDashboard }) {
                 </span>
               </div>
 
-              <div className="flex items-end gap-2 mb-2">
-                <span className="text-2xl font-bold text-gray-800">{Math.round(weather.temperature)}°C</span>
-                <span className="text-[11px] text-gray-600 pb-1">{weather.condition}</span>
+              <div className="mb-3 flex items-end gap-3">
+                <span className="text-4xl font-bold tracking-tight text-gray-800">{Math.round(weather.temperature)}°</span>
+                <div className="pb-1">
+                  <span className="block text-[11px] font-bold text-gray-700">Celsius</span>
+                  <span className="block text-[11px] text-gray-600">{weather.condition}</span>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-[10px] text-gray-600">
-                <div className="bg-white/80 rounded-lg p-2">
-                  <p className="text-gray-400 mb-0.5">Humidity</p>
-                  <p className="font-semibold text-gray-800">{Math.round(weather.humidity)}%</p>
+                <div className="rounded-xl border border-white/60 bg-white/60 p-2.5">
+                  <p className="mb-1 text-gray-500">Humidity</p>
+                  <p className="text-base font-bold text-gray-800">{Math.round(weather.humidity)}<span className="text-[10px]">%</span></p>
                 </div>
-                <div className="bg-white/80 rounded-lg p-2">
-                  <p className="text-gray-400 mb-0.5">Rain</p>
-                  <p className="font-semibold text-gray-800">{Math.round(weather.rain_probability)}%</p>
+                <div className="rounded-xl border border-white/60 bg-white/60 p-2.5">
+                  <p className="mb-1 text-gray-500">Rain chance</p>
+                  <p className="text-base font-bold text-gray-800">{Math.round(weather.rain_probability)}<span className="text-[10px]">%</span></p>
                 </div>
               </div>
 
@@ -247,9 +293,26 @@ export default function Home({ onViewDashboard }) {
               </p>
             </div>
           )}
+          {!weather && !weatherError && (
+            <div className="animate-pulse rounded-2xl border border-[#d9e7d7] bg-[#f4f8ed]/80 p-4 shadow-sm">
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <div className="h-2.5 w-28 rounded-full bg-[#c9dfcc]" />
+                  <div className="h-2 w-40 rounded-full bg-[#d9e7d7]" />
+                  <div className="h-5 w-24 rounded-full bg-[#d9e7d7]" />
+                </div>
+                <div className="h-12 w-12 rounded-2xl bg-[#d9e7d7]" />
+              </div>
+              <div className="mt-5 h-9 w-24 rounded-lg bg-[#c9dfcc]" />
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="h-14 rounded-xl bg-white/60" />
+                <div className="h-14 rounded-xl bg-white/60" />
+              </div>
+            </div>
+          )}
           {weatherError && <p className="text-[11px] text-gray-400 text-center">{weatherError}</p>}
 
-          <div className="text-xs">
+          <div className="text-xs rise-in rise-in-delay-3">
             <SustainabilityCard />
           </div>
 
@@ -257,8 +320,27 @@ export default function Home({ onViewDashboard }) {
         </div>
 
         {/* Column 3 — AI Plant Doctor (scrolls internally only, if needed) */}
-        <div className="min-h-0 overflow-y-auto">
-          {plant && disease && <PlantDoctor plant={plant} disease={disease} weather={weather} />}
+        <div className="min-w-0 rise-in rise-in-delay-3">
+          <div className="mb-3 flex items-center gap-2 px-1">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2d7756] text-xs font-bold text-white">03</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b88628]">Keep learning</p>
+              <p className="text-xs font-semibold text-[#345046]">Your plant doctor</p>
+            </div>
+          </div>
+          {plant && disease ? (
+            <PlantDoctor plant={plant} disease={disease} weather={weather} />
+          ) : (
+            <div className="surface-lift rounded-2xl border border-[#c9dfcc] bg-[#edf5e9]/75 p-6 shadow-[0_12px_28px_rgba(31,77,57,0.08)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#173b31] text-xl text-[#e7c56f] shadow-md">✦</div>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#2d7756]">A thoughtful second opinion</p>
+              <h2 className="display-font mt-2 text-2xl leading-tight text-[#173b31]">Your plant doctor is ready.</h2>
+              <p className="mt-3 text-sm leading-6 text-[#52665a]">Upload a leaf photo and you’ll get a plain-language explanation, plus a place to ask follow-up questions.</p>
+              <div className="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[#b88628]">
+                <span className="h-2 w-2 rounded-full bg-[#d6a33d]" /> Waiting for a plant to examine
+              </div>
+            </div>
+          )}
         </div>
 
       </div>
